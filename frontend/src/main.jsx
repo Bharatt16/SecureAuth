@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
+import { Toaster } from "react-hot-toast";
 import App from "./App";
 import "./index.css";
 
@@ -11,6 +12,7 @@ ReactDOM.createRoot(
 ).render(
   <BrowserRouter>
     <AuthProvider>
+       <Toaster position="top-right" />
       <App />
     </AuthProvider>
   </BrowserRouter>

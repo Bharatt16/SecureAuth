@@ -1,6 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import AuthLayout from "../layouts/AuthLayout";
+import toast from "react-hot-toast"; 
+import api from "../api/axios.js";   
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -11,8 +13,8 @@ export default function RegisterPage() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/auth/register",
+      const response = await api.post(
+        "/auth/register",
         {
           name,
           email,
@@ -22,12 +24,12 @@ export default function RegisterPage() {
       );
 
       console.log(response.data);
-      alert("Registration successful!");
+      toast.success("Registration successful!");
     } catch (error) {
       console.error(error);
-      alert(
-        error.response?.data?.message || "Registration failed"
-      );
+      toast.error(
+  error.response?.data?.message || "Registration failed"
+);
     }
   };
 

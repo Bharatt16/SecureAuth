@@ -1,8 +1,10 @@
 // src/pages/ForgotPasswordPage.jsx
 
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import AuthLayout from "../layouts/AuthLayout";
+import toast from "react-hot-toast";
+import api from "../api/axios.js";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -14,14 +16,14 @@ export default function ForgotPasswordPage() {
     try {
       setLoading(true);
 
-      const response = await axios.post(
-        "http://localhost:4000/api/auth/forgot-password",
+      const response = await api.post(
+        "/auth/forgot-password",
         { email }
       );
 
-      alert(response.data.message);
+      toast.success(response.data.message);
     } catch (error) {
-      alert(
+      toast.error(
         error.response?.data?.message ||
           "Something went wrong"
       );

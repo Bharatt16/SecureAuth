@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios.js";
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -11,8 +12,8 @@ export default function ProfilePage() {
       try {
         const token = localStorage.getItem("accessToken");
 
-        const response = await axios.get(
-          "http://localhost:4000/api/auth/me",
+        const response = await api.get(
+          "/auth/me",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -33,8 +34,8 @@ export default function ProfilePage() {
     try {
       const token = localStorage.getItem("accessToken");
 
-      await axios.post(
-        "http://localhost:4000/api/auth/logout",
+      await api.post(
+        "/auth/logout",
         {},
         {
           headers: {

@@ -12,12 +12,18 @@ const transporter = nodemailer.createTransport({
 
 const sendEmail = async (to, subject, html) => {
   try {
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
       to,
       subject,
       html,
     });
+
+    console.log("MESSAGE ID:", info.messageId);
+    console.log("ACCEPTED:", info.accepted);
+    console.log("REJECTED:", info.rejected);
+
+    return info;
   } catch (error) {
     console.error("Failed to send email:", error);
     throw error;

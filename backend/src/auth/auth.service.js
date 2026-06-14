@@ -145,16 +145,16 @@ const forgotPassword = async (email) => {
   if (!user) throw ApiError.notFound("No account with that email");
 
   const { rawToken, hashedToken } = generateResetToken();
-  console.log("RAW VERIFY TOKEN:", rawToken);
-console.log("HASHED VERIFY TOKEN:", hashedToken);
-  console.log("Then verify like : http://localhost:5173/reset-password/3a66013672e190259b451028e8f40e13b7666dccfa8fe637ed702a668fdc35c2")
+//   console.log("RAW VERIFY TOKEN:", rawToken);
+//   console.log("HASHED VERIFY TOKEN:", hashedToken);
+//   console.log("Then verify like : http://localhost:5173/reset-password/3a66013672e190259b451028e8f40e13b7666dccfa8fe637ed702a668fdc35c2")
 
   user.resetPasswordToken = hashedToken;
   user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
   await user.save();
 
-console.log("RAW TOKEN:", rawToken);
-console.log("HASHED TOKEN:", hashedToken);
+// console.log("RAW TOKEN:", rawToken);
+// console.log("HASHED TOKEN:", hashedToken);
 
   try {
     await sendResetPasswordEmail(email, rawToken);

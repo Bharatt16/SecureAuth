@@ -1,9 +1,11 @@
 // src/pages/ResetPasswordPage.jsx
 
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
+import toast from "react-hot-toast";
+import api from "../api/axios.js";
 
 export default function ResetPasswordPage() {
   const { token } = useParams();
@@ -19,18 +21,18 @@ export default function ResetPasswordPage() {
     try {
       setLoading(true);
 
-      const response = await axios.put(
-        `http://localhost:4000/api/auth/reset-password/${token}`,
+      const response = await api.put(
+        `/auth/reset-password/${token}`,
         {
           password,
         }
       );
 
-      alert(response.data.message);
+      toast.success(response.data.message);
 
       navigate("/login");
     } catch (error) {
-      alert(
+      toast.error(
         error.response?.data?.message ||
           "Password reset failed"
       );

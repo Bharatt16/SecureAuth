@@ -1,7 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
+import toast from "react-hot-toast";
+import api from "../api/axios.js";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -16,8 +18,8 @@ export default function LoginPage() {
     try {
       setLoading(true);
 
-      const response = await axios.post(
-        "http://localhost:4000/api/auth/login",
+      const response = await api.post(
+        "/auth/login",
         {
           email,
           password,
@@ -33,7 +35,7 @@ export default function LoginPage() {
 
       localStorage.setItem("accessToken", accessToken);
 
-      alert("Login successful");
+      toast.success("Login successful");
 
       navigate("/profile");
     } catch (error) {
@@ -43,10 +45,9 @@ export default function LoginPage() {
   console.log("STATUS:", error.response?.status);
 
 
-      alert(
-        error.response?.data?.message ||
-          "Login failed"
-      );
+      toast.error(
+  error.response?.data?.message || "Login failed"
+);
     } finally {
       setLoading(false);
     }
