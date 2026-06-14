@@ -7,16 +7,16 @@ import User from './auth.model.js'
 const authenticate = async(req , res , next)=>{
     let token ;
 
-    if(req.headers.authorization?.startsWith("Bearer")){
-        token = req.header.authorization.split(" ")[1];
-    }
+if (req.headers.authorization?.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+}
 
     if (!token) throw ApiError.unauthorized("Not Authenticated");
 
     const decoded = verifyAccessToken(token);
     const user = await User.findById( decoded.id )
 
-    if(!user) throw new ApiError.unauthorized("User no longer logedd in")
+    if(!user) throw ApiError.unauthorized("User no longer logedd in")
 
     req.user = {
         id : user._id , 

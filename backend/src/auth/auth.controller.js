@@ -9,7 +9,7 @@ const register = async (req , res) =>{
 const login = async (req,res) =>{
     const { user , accessToken , refreshToken } = await authService.login(req.body)
 
-    res.cookie('RefreshToken' ,refreshToken , {
+    res.cookie('refreshToken' ,refreshToken , {
         httpOnly : true , 
         secure : process.env.NODE_ENV === "production",
         sameSite : "strict", 

@@ -1,4 +1,4 @@
-import { sendVerificationEmail } from "../common/config/email";
+// import { sendVerificationEmail } from "../common/config/email";
 import ApiError from "../common/utils/api-error";
 import { generateResetToken, verifyAccessToken, verifyRefreshToken } from "../common/utils/jwt.utils";
 import User from "./auth.model.js"
@@ -8,6 +8,12 @@ import {
 } from "../common/config/email.js";
 
 import { hashToken } from "../common/utils/token.utils.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  generateResetToken,
+  verifyRefreshToken,
+} from "../common/utils/jwt.utils.js";
 
 const register = async ({ name, email, password, role }) => {
   const existing = await User.findOne({ email });
