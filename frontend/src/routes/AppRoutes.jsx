@@ -6,6 +6,9 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import VerifyEmailPage from "../pages/VerifyEmailPage";
 import ProfilePage from "../pages/ProfilePage";
+import ProtectedRoute from "../components/ProtectedRoute";
+
+<Route path="/profile" element={<ProfilePage />} />
 
 export default function AppRoutes() {
   return (
@@ -41,10 +44,14 @@ export default function AppRoutes() {
         element={<VerifyEmailPage />}
       />
 
-      <Route
-        path="/profile"
-        element={<ProfilePage />}
-      />
+<Route
+  path="/profile"
+  element={
+    <ProtectedRoute>
+      <ProfilePage />
+    </ProtectedRoute>
+  }
+/>
 
     </Routes>
   );

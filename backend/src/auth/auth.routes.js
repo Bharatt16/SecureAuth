@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as controller from "./auth.controller.js";
-import { authenticate } from "./auth.middleware.js";
+import { authenticate , authorize} from "./auth.middleware.js";
 import validate from "../common/middleware/validate.middleware.js";
 import RegisterDto from "./dto/register.dto.js";
 import LoginDto from "./dto/login.dto.js";
@@ -29,5 +29,20 @@ router.put(
 router.get("/me", authenticate, controller.getMe);
 
 // router.post("/avatar", authenticate , upload.single("avatar") , controller.uploadAvatar)
+
+
+router.get(
+  "/admin-test",
+  authenticate,
+  authorize("admin"),
+  (req, res) => {
+    res.json({
+      success: true,
+      message: "Admin access granted"
+    });
+  }
+);
+
+
 
 export default router;

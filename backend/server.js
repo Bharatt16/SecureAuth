@@ -13,9 +13,14 @@ const start = async() =>{
         console.log(`Server is running on ${PORT}`)
     })
    try {
+    console.log("SMTP_HOST:", process.env.SMTP_HOST);
+console.log("SMTP_PORT:", process.env.SMTP_PORT);
+console.log("SMTP_USER:", process.env.SMTP_USER);
+console.log("SMTP_PASS exists:", !!process.env.SMTP_PASS);
   await transporter.verify();
   console.log("Email service connected");
 } catch (error) {
+    
   console.warn("Email service unavailable");
   console.warn(error.message);
 }

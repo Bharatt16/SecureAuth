@@ -1,22 +1,17 @@
-import api from "./api";
+import api from "../api/axios.js";
 
 export const register = (data) =>
-  api.post("/auth/register", data);
+  api.post("/register", data);
 
 export const login = (data) =>
-  api.post("/auth/login", data);
-
-export const getMe = () =>
-  api.get("/auth/me");
+  api.post("/login", data);
 
 export const logout = () =>
-  api.post("/auth/logout");
+  api.post("/logout");
 
-export const forgotPassword = (email) =>
-  api.post("/auth/forgot-password", { email });
-
-export const resetPassword = (token, password) =>
-  api.put(`/auth/reset-password/${token}`, { password });
-
-export const verifyEmail = (token) =>
-  api.get(`/auth/verify-email/${token}`);
+export const getMe = (token) =>
+  api.get("/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });

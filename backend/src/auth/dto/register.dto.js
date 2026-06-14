@@ -1,5 +1,5 @@
 import Joi from "joi";
-import BaseDto from "../../../common/dto/base.dto.js";
+import BaseDto from "../../common/dto/base.dto.js";
 
 class RegisterDto extends BaseDto {
   static schema = Joi.object({
@@ -12,7 +12,7 @@ class RegisterDto extends BaseDto {
         "Password must contain at least one uppercase letter and one digit",
       )
       .required(),
-    role: Joi.string().valid("customer", "seller").default("customer"),
+    role: Joi.string().valid("admin", "moderator" , "user").default("user"),
   });
 }
 

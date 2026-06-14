@@ -1,33 +1,73 @@
-import { Link } from "react-router-dom";
+// src/pages/ForgotPasswordPage.jsx
+
+import { useState } from "react";
+import axios from "axios";
 import AuthLayout from "../layouts/AuthLayout";
 
 export default function ForgotPasswordPage() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        "http://localhost:4000/api/auth/forgot-password",
+        { email }
+      );
+
+      alert(response.data.message);
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+          "Something went wrong"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AuthLayout
       title="Forgot Password"
-      subtitle="We'll send a reset link."
+      subtitle="Enter your email to receive a reset link."
     >
-      <form className="space-y-8">
-
+      <form onSubmit={handleSubmit} className="space-y-8">
         <input
           type="email"
           placeholder="Email"
-          className="w-full bg-transparent border-b border-gray-300 py-4 outline-none"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+          className="
+            w-full
+            bg-transparent
+            border-b
+            border-gray-300
+            py-4
+            outline-none
+          "
         />
 
         <button
-          className="w-full bg-[#C8102E] text-white py-4 font-semibold"
+          type="submit"
+          disabled={loading}
+          className="
+            w-full
+            bg-[#C8102E]
+            text-white
+            py-4
+            font-semibold
+          "
         >
-          Send Reset Link
+          {loading
+            ? "Sending..."
+            : "Send Reset Link"}
         </button>
-
-        <Link
-          to="/login"
-          className="block text-center text-[#C8102E]"
-        >
-          Back to Login
-        </Link>
-
       </form>
     </AuthLayout>
   );
