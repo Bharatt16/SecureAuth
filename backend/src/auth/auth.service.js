@@ -21,9 +21,9 @@ const register = async ({ name, email, password}) => {
   if (existing) throw ApiError.conflict("Email already registered");
 
   const { rawToken, hashedToken } = generateResetToken();
-    console.log("RAW VERIFY TOKEN:", rawToken);
-console.log("HASHED VERIFY TOKEN:", hashedToken);
-  console.log("Then verify like : http://localhost:4000/api/auth/verify-email/abc123xyz...")
+//     console.log("RAW VERIFY TOKEN:", rawToken);
+// console.log("HASHED VERIFY TOKEN:", hashedToken);
+//   console.log("Then verify like : http://localhost:4000/api/auth/verify-email/abc123xyz...")
 
   const user = await User.create({
     name,

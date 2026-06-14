@@ -11,7 +11,10 @@ const app = express(); //json parser
 // app.options("*", cors());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      process.env.CLIENT_URL,
+    ],
     credentials: true,
   })
 );
@@ -21,16 +24,28 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" })); //Parses form da
 app.use(cookieParser()); //Parses cookies:
 //Cookie: refreshToken=abc12
 
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "SecureAuth API Running",
+  });
+});
 
 app.use("/api/auth", authRoute);
 
 // Catch-all for undefined routes
 // or simply "*"
 app.all("{*path}", (req, res) => {
-  throw ApiError.notfound(`Route ${req.originalUrl} not found`);
+  throw ApiError.notFound(`Route ${req.originalUrl} not found`);
 });
 
 
+app.use((err, req, res, next) => {
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message,
+  });
+});
 
 
 

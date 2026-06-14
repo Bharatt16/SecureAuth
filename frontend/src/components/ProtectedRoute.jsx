@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-// import axios from "axios";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios.js";
+import api from "../api/axios";
+import useAuth from "../hooks/useAuth";
 
 export default function ProfilePage() {
-  const [user, setUser] = useState(null);
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,23 +12,25 @@ export default function ProfilePage() {
       try {
         const token = localStorage.getItem("accessToken");
 
-        const response = await api.get(
-          "/auth/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await api.get("/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setUser(response.data.data);
       } catch (error) {
         console.error(error);
+
+        localStorage.removeItem("accessToken");
+        navigate("/login");
       }
     };
 
-    fetchProfile();
-  }, []);
+    if (!user) {
+      fetchProfile();
+    }
+  }, [user, setUser, navigate]);
 
   const handleLogout = async () => {
     try {
@@ -41,11 +43,11 @@ export default function ProfilePage() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          withCredentials: true,
         }
       );
 
       localStorage.removeItem("accessToken");
+      setUser(null);
 
       navigate("/login");
     } catch (error) {
@@ -54,7 +56,11 @@ export default function ProfilePage() {
   };
 
   if (!user) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   return (
