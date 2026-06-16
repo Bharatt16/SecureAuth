@@ -1,22 +1,174 @@
 @import "tailwindcss";
 
-body{
-  background:#F7F3EE;
-  font-family:Inter,sans-serif;
+/* =========================
+   GLOBAL RESET
+========================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.jp-pattern{
-  background-image:
-  radial-gradient(
-    circle at 100% 150%,
-    #ece6de 24%,
-    transparent 25%
-  ),
-  radial-gradient(
-    circle at 0 150%,
-    #ece6de 24%,
-    transparent 25%
-  );
+html {
+  scroll-behavior: smooth;
+}
 
-  background-size:80px 80px;
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #f7f3ee;
+  color: #111827;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* =========================
+   SELECTION
+========================= */
+
+::selection {
+  background: #c8102e;
+  color: white;
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f7f3ee;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c8102e;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+input:focus {
+  outline: none;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+  text-decoration: none;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.fade-in {
+  animation: fadeIn 0.4s ease;
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================
+   HERO IMAGE OVERLAY
+========================= */
+
+.hero-overlay {
+  background:
+    linear-gradient(
+      rgba(255,255,255,0.04),
+      rgba(255,255,255,0.04)
+    );
+}
+
+
+/* =========================
+   PREMIUM CARD
+========================= */
+
+.auth-card {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
 }

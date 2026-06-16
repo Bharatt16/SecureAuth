@@ -8,7 +8,6 @@ import VerifyEmailPage from "../pages/VerifyEmailPage";
 import ProfilePage from "../pages/ProfilePage";
 import ProtectedRoute from "../components/ProtectedRoute";
 
-<Route path="/profile" element={<ProfilePage />} />
 
 export default function AppRoutes() {
   return (

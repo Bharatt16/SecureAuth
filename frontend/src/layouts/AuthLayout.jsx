@@ -1,49 +1,68 @@
+import hero from "../assets/hero.png";
+
 export default function AuthLayout({
   title,
   subtitle,
   children,
 }) {
   return (
-    <div className="min-h-screen bg-[#F7F3EE] overflow-hidden">
+    <div className="min-h-screen bg-[#F7F3EE]">
 
-      <div className="grid lg:grid-cols-2 min-h-screen">
+     <div
+  className="
+  min-h-screen
+  lg:grid
+  lg:grid-cols-[60%_40%]
+  "
+>
 
-        {/* LEFT SIDE */}
+        {/* LEFT SIDE DESKTOP */}
         <section className="relative hidden lg:flex overflow-hidden">
 
-          {/* Japanese Pattern */}
+        <img
+  src={hero}
+  alt="Hero"
+  className="
+  absolute
+  inset-0
+  w-full
+  h-full
+  object-cover
+  object-[65%_center]
+  "
+/>
+
           <div
             className="
             absolute
             inset-0
-            opacity-20
-            bg-[radial-gradient(circle_at_100%_150%,#d6d3d1_24%,transparent_25%),radial-gradient(circle_at_0_150%,#d6d3d1_24%,transparent_25%)]
-            bg-[length:80px_80px]
+            bg-gradient-to-r
+            from-white/5
+            to-transparent
             "
           />
 
-          {/* Red Sun */}
           <div
             className="
-            absolute
-            w-[650px]
-            h-[650px]
-            rounded-full
-            bg-[#C8102E]
-            -right-[280px]
-            top-1/2
-            -translate-y-1/2
+            relative
+            z-20
+            flex
+            flex-col
+            justify-between
+            w-full
+           pl-10
+pr-12
+py-16     
             "
-          />
-
-          <div className="relative z-10 flex flex-col justify-between w-full p-20">
-
+          >
             <div>
+
               <p
                 className="
                 text-[#C8102E]
-                tracking-[14px]
-                text-sm
+                tracking-[12px]
+                text-xs
+                font-medium
                 mb-10
                 "
               >
@@ -52,9 +71,10 @@ export default function AuthLayout({
 
               <h1
                 className="
-                text-[8rem]
+                text-[7rem]
                 font-black
-                leading-[0.9]
+                leading-[0.85]
+                tracking-tight
                 text-[#111827]
                 "
               >
@@ -63,9 +83,10 @@ export default function AuthLayout({
 
               <h1
                 className="
-                text-[8rem]
+                text-[5rem]
                 font-black
-                leading-[0.9]
+                leading-[0.85]
+                tracking-tight
                 text-[#C8102E]
                 "
               >
@@ -74,10 +95,10 @@ export default function AuthLayout({
 
               <p
                 className="
-                mt-10
-                text-gray-600
-                text-lg
+                mt-8
+                text-gray-950
                 max-w-sm
+                text-lg
                 "
               >
                 Authentication inspired by
@@ -87,55 +108,101 @@ export default function AuthLayout({
             </div>
 
             <div>
-              <p className="text-gray-500 mb-6">
+
+              <p className=" text-gray-950 mb-5">
                 Designed by Bharat
               </p>
 
-              <div className="flex gap-4 items-center">
-                <span className="text-red-700 text-2xl">
+              {/* <div className="flex items-center gap-3">
+                <span className="text-red-700 text-xl">
                   認証
                 </span>
 
                 <span className="text-gray-600">
                   安全・認証・信頼
                 </span>
-              </div>
+              </div> */}
+
             </div>
           </div>
         </section>
 
         {/* RIGHT SIDE */}
-        <section className="flex items-center justify-center px-8 py-12">
+        <section
+          className="
+          flex
+          items-center
+          justify-center
+          px-6
+          py-10
+          lg:px-12
+          "
+        >
+          <div
+            className="
+            w-full
+            max-w-md
+            "
+          >
 
-          <div className="w-full max-w-md">
-
-            {/* Mobile Branding */}
-            <div className="lg:hidden mb-12 text-center">
-
-              <p
+            {/* MOBILE HERO */}
+            <div
+              className="
+              lg:hidden
+              relative
+              h-[280px]
+              rounded-3xl
+              overflow-hidden
+              mb-10
+              "
+            >
+              <img
+                src={hero}
+                alt="Hero"
                 className="
-                text-[#C8102E]
-                tracking-[10px]
-                text-xs
-                mb-4
+                absolute
+                inset-0
+                w-full
+                h-full
+                object-cover
+                object-center
+                "
+              />
+
+              <div
+                className="
+                absolute
+                inset-0
+                bg-gradient-to-t
+                from-[#F7F3EE]
+                via-transparent
+                to-transparent
+                "
+              />
+
+              <div
+                className="
+                absolute
+                bottom-5
+                left-5
                 "
               >
-                SECURE • AUTH
-              </p>
-
-              <h1 className="text-5xl font-black text-[#111827]">
-                SECURE
-              </h1>
-
-              <h1 className="text-5xl font-black text-[#C8102E]">
-                AUTH
-              </h1>
+                <p
+                  className="
+                  text-[#C8102E]
+                  text-xs
+                  tracking-[8px]
+                  "
+                >
+                  SECURE • AUTH
+                </p>
+              </div>
             </div>
 
             <p
               className="
-              text-[#C8102E]
               uppercase
+              text-[#C8102E]
               tracking-[8px]
               text-xs
               mb-3
@@ -155,14 +222,22 @@ export default function AuthLayout({
               {title}
             </h2>
 
-            <p className="text-gray-500 mb-10">
+            <p
+              className="
+              text-gray-500
+              mb-10
+              "
+            >
               {subtitle}
             </p>
 
             {children}
+
           </div>
         </section>
+
       </div>
+
     </div>
   );
 }
