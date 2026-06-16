@@ -9,12 +9,22 @@ import cors from "cors";
 
 const app = express(); //json parser
 // app.options("*", cors());
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       process.env.CLIENT_URL,
+//     ],
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      process.env.CLIENT_URL,
-    ],
+    origin: (origin, callback) => {
+      console.log("REQUEST ORIGIN:", origin);
+      callback(null, true);
+    },
     credentials: true,
   })
 );

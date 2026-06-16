@@ -2,36 +2,53 @@ import { useState } from "react";
 // import axios from "axios";
 import AuthLayout from "../layouts/AuthLayout";
 import toast from "react-hot-toast"; 
-import api from "../api/axios.js";   
+import api from "../api/axios.js"; 
+import { useNavigate } from "react-router-dom";
+
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const navigate = useNavigate();
 
-    try {
-      const response = await api.post(
-        "/auth/register",
-        {
-          name,
-          email,
-          password,
-          role: "user",
-        }
-      );
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      console.log(response.data);
-      toast.success("Registration successful!");
-    } catch (error) {
-      console.error(error);
-      toast.error(
-  error.response?.data?.message || "Registration failed"
-);
+  const toastId = toast.loading("Creating account...");
+
+  try {
+    const response = await api.post("/auth/register", {
+      name,
+      email,
+      password,
+      role: "user",
+    });
+
+    toast.success(
+      response.data.message,
+      {
+        id: toastId,
+      }
+    );
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
+
+  }catch (error) {
+  console.log(error.response?.data);
+
+  toast.error(
+    error.response?.data?.message ||
+    "Registration failed",
+    {
+      id: toastId,
     }
-  };
+  );
+}
+};
 
   return (
     <AuthLayout

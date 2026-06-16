@@ -16,6 +16,7 @@ import {
 } from "../common/utils/jwt.utils.js";
 
 const register = async ({ name, email, password}) => {
+     console.log("REGISTER FUNCTION HIT");
   const existing = await User.findOne({ email });
 
   if (existing) throw ApiError.conflict("Email already registered");
@@ -33,11 +34,21 @@ const register = async ({ name, email, password}) => {
     verificationToken: hashedToken,
   });
 
-  try {
-    await sendVerificationEmail(email, rawToken);
-  } catch (error) {
-    console.error("Failed to send verification email : ", error.message);
-  }
+//   try {
+//     await sendVerificationEmail(email, rawToken);
+//   } catch (error) {
+//     console.error("Failed to send verification email : ", error.message);
+//   }
+
+try {
+  console.log("About to send verification email to:", email);
+
+  await sendVerificationEmail(email, rawToken);
+
+  console.log("Verification email function finished");
+} catch (error) {
+  console.error("Failed to send verification email:", error.message);
+}
 
   const userObj = user.toObject();
   delete userObj.password;

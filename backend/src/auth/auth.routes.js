@@ -43,6 +43,24 @@ router.get(
   }
 );
 
+router.get("/test-brevo", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://api.brevo.com/v3/account",
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (err) {
+    console.log(err.response?.data);
+    res.json(err.response?.data);
+  }
+});
+
 
 
 export default router;
