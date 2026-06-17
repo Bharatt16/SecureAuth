@@ -6,8 +6,8 @@ import RegisterDto from "./dto/register.dto.js";
 import LoginDto from "./dto/login.dto.js";
 import ForgotPasswordDto from "./dto/forgot-password.dto.js";
 import ResetPasswordDto from "./dto/reset-password.dto.js";
-// import { upload } from "../../common/middleware/multer.middleware.js"
-// import { uploadAvatar } from "./auth.controller.js";
+import { upload } from "../common/middleware/multer.middleware.js";
+import { uploadAvatar } from "./auth.controller.js";
 
 const router = Router();
 
@@ -60,6 +60,13 @@ router.get("/test-brevo", async (req, res) => {
     res.json(err.response?.data);
   }
 });
+
+router.post(
+  "/avatar",
+  authenticate,
+  upload.single("avatar"),
+  controller.uploadAvatar
+);
 
 
 

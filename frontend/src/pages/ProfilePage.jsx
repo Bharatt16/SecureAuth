@@ -1,36 +1,26 @@
 import { useEffect, useState } from "react";
-import {
-  Mail,
-  Shield,
-  LogOut,
-  User,
-} from "lucide-react";
+import { Mail, Shield, LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios.js";
-
+import toast from "react-hot-toast";
 export default function ProfilePage() {
-    // console.log("NEW PROFILE PAGE LOADED");
+  // console.log("NEW PROFILE PAGE LOADED");
   const [user, setUser] = useState(null);
-
+  const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token =
-          localStorage.getItem(
-            "accessToken"
-          );
+        const token = localStorage.getItem("accessToken");
 
-        const response =
-          await api.get("/auth/me", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+        const response = await api.get("/auth/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setUser(response.data.data);
-
       } catch (error) {
         console.error(error);
       }
@@ -41,10 +31,7 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     try {
-      const token =
-        localStorage.getItem(
-          "accessToken"
-        );
+      const token = localStorage.getItem("accessToken");
 
       await api.post(
         "/auth/logout",
@@ -54,17 +41,51 @@ export default function ProfilePage() {
             Authorization: `Bearer ${token}`,
           },
           withCredentials: true,
-        }
+        },
       );
 
-      localStorage.removeItem(
-        "accessToken"
-      );
+      localStorage.removeItem("accessToken");
 
       navigate("/login");
-
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleAvatarUpload = async (e) => {
+    try {
+      const file = e.target.files[0];
+
+      if (!file) return;
+
+      setUploading(true);
+
+      const token = localStorage.getItem("accessToken");
+
+      const formData = new FormData();
+
+      formData.append("avatar", file);
+
+      const response = await api.post("/auth/avatar", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUser((prev) => ({
+        ...prev,
+        profileImage: response.data.data.avatarUrl,
+    }));
+    toast.success("Avatar updated successfully");
+    } catch (error) {
+      console.error(error);
+       toast.error(
+    error.response?.data?.message ||
+    "Failed to upload avatar"
+  );
+  e.target.value = "";
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -95,9 +116,7 @@ export default function ProfilePage() {
   }
 
   return (
-    
     <div className="min-h-screen bg-[#F7F3EE]">
-
       {/* NAVBAR */}
 
       <div
@@ -125,12 +144,8 @@ export default function ProfilePage() {
             font-black
             "
           >
-            <span className="text-[#111827]">
-              SECURE
-            </span>{" "}
-            <span className="text-[#C8102E]">
-              AUTH
-            </span>
+            <span className="text-[#111827]">SECURE</span>{" "}
+            <span className="text-[#C8102E]">AUTH</span>
           </h1>
 
           <button
@@ -159,7 +174,6 @@ export default function ProfilePage() {
         py-12
         "
       >
-
         {/* PROFILE CARD */}
 
         <div
@@ -181,27 +195,76 @@ export default function ProfilePage() {
             gap-8
             "
           >
-
             {/* AVATAR */}
+{/* AVATAR + BUTTON */}
 
-            <div
-              className="
-              w-28
-              h-28
-              rounded-full
-              bg-[#C8102E]
-              flex
-              items-center
-              justify-center
-              text-white
-              text-5xl
-              font-black
-              "
-            >
-              {user.name
-                ?.charAt(0)
-                ?.toUpperCase()}
-            </div>
+<div className="flex flex-col items-center">
+  <div
+    className="
+    w-28
+    h-28
+    rounded-full
+    overflow-hidden
+    bg-[#C8102E]
+    flex
+    items-center
+    justify-center
+    "
+  >
+    {user.profileImage ? (
+     <img
+  src={user.profileImage}
+  alt={user.name}
+  onError={(e) => {
+    e.target.style.display = "none";
+  }}
+  className="
+  w-full
+  h-full
+  object-cover
+  "
+/>
+    ) : (
+      <span
+        className="
+        text-white
+        text-5xl
+        font-black
+        "
+      >
+        {user.name
+          ?.charAt(0)
+          ?.toUpperCase()}
+      </span>
+    )}
+  </div>
+
+  <label
+    className="
+    mt-4
+    cursor-pointer
+    px-4
+    py-2
+    bg-[#C8102E]
+    text-white
+    rounded-xl
+    text-sm
+    hover:opacity-90
+    transition
+    "
+  >
+    {uploading
+      ? "Uploading..."
+      : "Change Avatar"}
+
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleAvatarUpload}
+      className="hidden"
+    />
+  </label>
+</div>
 
             {/* INFO */}
 
@@ -225,7 +288,6 @@ export default function ProfilePage() {
                 Welcome back.
               </p>
             </div>
-
           </div>
         </div>
 
@@ -239,7 +301,6 @@ export default function ProfilePage() {
           mt-8
           "
         >
-
           {/* EMAIL */}
 
           <div
@@ -260,10 +321,7 @@ export default function ProfilePage() {
               mb-4
               "
             >
-              <Mail
-                size={20}
-                className="text-[#C8102E]"
-              />
+              <Mail size={20} className="text-[#C8102E]" />
 
               <span
                 className="
@@ -306,10 +364,7 @@ export default function ProfilePage() {
               mb-4
               "
             >
-              <Shield
-                size={20}
-                className="text-[#C8102E]"
-              />
+              <Shield size={20} className="text-[#C8102E]" />
 
               <span
                 className="
@@ -331,7 +386,6 @@ export default function ProfilePage() {
               {user.role}
             </p>
           </div>
-
         </div>
 
         {/* ACCOUNT STATUS */}
@@ -355,10 +409,7 @@ export default function ProfilePage() {
             mb-4
             "
           >
-            <User
-              size={20}
-              className="text-[#C8102E]"
-            />
+            <User size={20} className="text-[#C8102E]" />
 
             <span
               className="
@@ -384,7 +435,6 @@ export default function ProfilePage() {
             Active
           </div>
         </div>
-
       </div>
     </div>
   );
