@@ -48,6 +48,11 @@ export default function LoginPage() {
         accessToken
       );
 
+      localStorage.setItem(
+  "role",
+  response.data.data.user.role
+);
+
       toast.success(
         "Login successful"
       );

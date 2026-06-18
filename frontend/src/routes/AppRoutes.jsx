@@ -7,48 +7,41 @@ import ResetPasswordPage from "../pages/ResetPasswordPage";
 import VerifyEmailPage from "../pages/VerifyEmailPage";
 import ProfilePage from "../pages/ProfilePage";
 import ProtectedRoute from "../components/ProtectedRoute";
-
+import AdminPage from "../pages/AdminPage";
+import AdminRoute from "../components/AdminRoute";
 
 export default function AppRoutes() {
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
+
+      <Route path="/login" element={<LoginPage />} />
+
+      <Route path="/register" element={<RegisterPage />} />
+
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+
+      <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
 
       <Route
-        path="/"
-        element={<Navigate to="/login" />}
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        }
       />
+
+
 
       <Route
-        path="/login"
-        element={<LoginPage />}
-      />
-
-      <Route
-        path="/register"
-        element={<RegisterPage />}
-      />
-
-      <Route
-        path="/forgot-password"
-        element={<ForgotPasswordPage />}
-      />
-
-      <Route
-        path="/reset-password/:token"
-        element={<ResetPasswordPage />}
-      />
-
-      <Route
-        path="/verify-email/:token"
-        element={<VerifyEmailPage />}
-      />
-
-<Route
-  path="/profile"
+  path="/admin"
   element={
-    <ProtectedRoute>
-      <ProfilePage />
-    </ProtectedRoute>
+    <AdminRoute>
+      <AdminPage />
+    </AdminRoute>
   }
 />
 

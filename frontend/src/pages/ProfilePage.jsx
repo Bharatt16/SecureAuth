@@ -45,6 +45,7 @@ export default function ProfilePage() {
       );
 
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("role");
 
       navigate("/login");
     } catch (error) {
@@ -83,8 +84,8 @@ export default function ProfilePage() {
     error.response?.data?.message ||
     "Failed to upload avatar"
   );
-  e.target.value = "";
-    } finally {
+} finally {
+      e.target.value = "";
       setUploading(false);
     }
   };
@@ -161,6 +162,23 @@ export default function ProfilePage() {
             <LogOut size={18} />
             Logout
           </button>
+
+          {user.role === "admin" && (
+  <button
+    onClick={() =>
+      navigate("/admin")
+    }
+    className="
+    px-4
+    py-2
+    rounded-xl
+    bg-[#111827]
+    text-white
+    "
+  >
+    Admin Panel
+  </button>
+)}
         </div>
       </div>
 
