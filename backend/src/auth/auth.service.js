@@ -239,6 +239,17 @@ console.log(
   }
 };
 
+
+const getAllUsers = async () => {
+  const users = await User.find()
+    .select(
+      "-password -refreshToken -verificationToken -resetPasswordToken -resetPasswordExpires"
+    )
+    .sort({ createdAt: -1 });
+
+  return users;
+};
+
 export {
   register,
   login,
@@ -249,4 +260,5 @@ export {
   resetPassword,
   getMe,
   avatarUpload,
+  getAllUsers
 };

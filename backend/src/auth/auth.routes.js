@@ -70,4 +70,12 @@ router.post(
 
 
 
+router.get(
+  "/admin/users",
+  authenticate,
+  authorize("admin"),
+  controller.getAllUsers
+);
+
+
 export default router;

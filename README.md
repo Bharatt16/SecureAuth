@@ -6,6 +6,8 @@ SecureAuth provides a complete authentication workflow including registration, l
 
 ---
 
+Live link - https://secure-auth-iota.vercel.app/
+
 ## 🚀 Features
 
 ### Authentication

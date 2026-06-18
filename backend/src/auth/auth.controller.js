@@ -77,6 +77,16 @@ console.log(req.file);
   });
 };
 
+const getAllUsers = async (req, res) => {
+  const users = await authService.getAllUsers();
+
+  ApiResponse.ok(
+    res,
+    "Users fetched successfully",
+    users
+  );
+};
+
 export {
   register,
   login,
@@ -87,4 +97,5 @@ export {
   resetPassword,
   getMe,
   uploadAvatar,
+  getAllUsers
 };
